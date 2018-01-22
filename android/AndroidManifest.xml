@@ -9,6 +9,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
+
         <activity
             android:name="ru.chertenok.game.acceltest.AndroidLauncher"
             android:label="@string/app_name" 
