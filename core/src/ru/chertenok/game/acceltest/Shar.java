@@ -60,8 +60,8 @@ public class Shar {
         positionOld.set(position);
 
         if (velosity.x > 0) {
-            if (velosity.x - stoping < 0) velosity.x = 0;
-            else velosity.x -= stoping;
+            if (velosity.x - stoping * dt < 0) velosity.x = 0;
+            else velosity.x -= stoping * dt;
         }
         if (velosity.x < 0) {
             if (velosity.x + stoping > 0) velosity.x = 0;
@@ -69,11 +69,11 @@ public class Shar {
         }
 
         if (velosity.y > 0)
-            if (velosity.y - stoping < 0) velosity.y = 0;
-            else velosity.y -= stoping;
+            if (velosity.y - stoping * dt < 0) velosity.y = 0;
+            else velosity.y -= stoping * dt;
         if (velosity.y < 0)
-            if (velosity.y + stoping > 0) velosity.y = 0;
-            else velosity.y += stoping;
+            if (velosity.y + stoping * dt > 0) velosity.y = 0;
+            else velosity.y += stoping * dt;
 
 
         if (abs(x) < 0.3f) x = 0;
@@ -100,9 +100,9 @@ public class Shar {
 
 
         if (abs(velosity.y + velosityAcc.y) < maxSpeed) {
-            velosity.y += velosityAcc.y;
+            velosity.y += velosityAcc.y * dt;
         }
-        position.y += velosity.y * dt;
+        position.y += velosity.y;
         if (position.y < 0) {
             position.y = 0;
             velosity.y = -velosity.y;
