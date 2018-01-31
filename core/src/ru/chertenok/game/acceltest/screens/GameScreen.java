@@ -22,11 +22,11 @@ import java.util.Random;
 public class GameScreen implements Screen {
 
     public static final Random random = new Random();
+    public Sound sound;
     private AssetManager assetManager;
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport viewport;
-
     private Texture img;
     private Texture fon;
     private Texture lose;
@@ -35,8 +35,11 @@ public class GameScreen implements Screen {
     private int sharCount = 1;
     private Shar[] shar = new Shar[sharCount];
     private float dts;
-    public Sound sound;
     private BitmapFont font = new BitmapFont();
+    private float dtMax = 0.3f;
+    private float dtCount = 0;
+    float accl_y = 0;
+    float accl_x = 0;
 
 
     private PooledEngine engine;
@@ -51,7 +54,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
 
-        camera = new OrthographicCamera();
+        camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera);
 
 
@@ -72,10 +75,14 @@ public class GameScreen implements Screen {
     public void render(float delta) {
 
         update(Gdx.graphics.getDeltaTime());
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
+        //viewport.apply();
+
         batch.begin();
-        batch.draw(fon, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(fon, 0, 0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
         batch.draw(lose, 300, 300);
 
         for (int i = 0; i < sharCount; i++) {
@@ -102,12 +109,16 @@ public class GameScreen implements Screen {
 
 
     private void update(float dt) {
-        float accl_y = -Gdx.input.getAccelerometerX();
-        float accl_x = Gdx.input.getAccelerometerY();
+        dtCount += dt;
+
+        if (dtCount > dtMax) {
+            accl_y = -Gdx.input.getAccelerometerX();
+            accl_x = Gdx.input.getAccelerometerY();
+            dtCount =0;
+        }
         for (int i = 0; i < sharCount; i++) {
             shar[i].update(accl_x, accl_y, dt);
         }
-
 
     }
 
@@ -130,6 +141,7 @@ public class GameScreen implements Screen {
     public void hide() {
 
     }
+
 
     @Override
     public void dispose() {

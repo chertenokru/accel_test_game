@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import ru.chertenok.game.acceltest.config.GameConfig;
 
 import static java.lang.Math.abs;
 
@@ -128,8 +129,8 @@ public class Shar {
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture, position.x, position.y, textureWidth, textureHeight);
-        screenHeight = Gdx.graphics.getHeight();
-        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = GameConfig.WORLD_HEIGHT;
+        screenWidth = GameConfig.WORLD_WIDTH;
 
     }
 }
