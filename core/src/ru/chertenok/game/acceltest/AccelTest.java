@@ -1,5 +1,6 @@
 package ru.chertenok.game.acceltest;
 
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -23,6 +24,8 @@ public class AccelTest extends ApplicationAdapter {
 	Shar[] shar = new Shar[sharCount];
 	float dts;
 	public Sound sound;
+
+	private PooledEngine engine;
 
 	@Override
 	public void create () {
