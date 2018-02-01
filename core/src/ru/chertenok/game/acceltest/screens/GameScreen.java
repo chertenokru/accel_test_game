@@ -69,6 +69,8 @@ public class GameScreen implements Screen {
             Gdx.app.log("y=", "" + shar[i].getPosition().y);
         }
 
+        engine = new PooledEngine();
+
     }
 
     @Override
