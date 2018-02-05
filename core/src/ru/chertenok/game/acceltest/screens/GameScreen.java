@@ -28,7 +28,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
     private Texture img;
-    private Texture fon;
+
     private Texture lose;
     private float x, y;
     private float speed = 40f;
@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
 
 
         img = assetManager.get("shar.png", Texture.class);
-        fon = assetManager.get("fon.jpg", Texture.class);
+
         lose = assetManager.get("lose.png", Texture.class);
         sound = assetManager.get("roll2.wav", Sound.class);
 
@@ -79,13 +79,16 @@ public class GameScreen implements Screen {
         update(Gdx.graphics.getDeltaTime());
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
         //viewport.apply();
 
         batch.begin();
-        batch.draw(fon, 0, 0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
+        engine.update(delta);
         batch.draw(lose, 300, 300);
+
 
         for (int i = 0; i < sharCount; i++) {
             shar[i].draw(batch);
@@ -141,7 +144,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
 
