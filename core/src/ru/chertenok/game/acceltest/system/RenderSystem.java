@@ -18,7 +18,7 @@ public class RenderSystem extends EntitySystem {
     private Texture fon;
 
 
-    public RenderSystem(int priority, AccelTest game, OrthographicCamera camera, Viewport viewport) {
+    public RenderSystem( AccelTest game, OrthographicCamera camera, Viewport viewport) {
         super(0);
         this.batch = game.getBatch();
         this.camera = camera;

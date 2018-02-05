@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.chertenok.game.acceltest.AccelTest;
 import ru.chertenok.game.acceltest.Shar;
 import ru.chertenok.game.acceltest.config.GameConfig;
+import ru.chertenok.game.acceltest.system.RenderSystem;
 
 import java.util.Random;
 
@@ -28,6 +29,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
     private Texture img;
+    private AccelTest game;
 
     private Texture lose;
     private float x, y;
@@ -42,12 +44,15 @@ public class GameScreen implements Screen {
     float accl_x = 0;
 
 
+
+
     private PooledEngine engine;
 
 
     public GameScreen(AccelTest game) {
         this.assetManager = game.getAssetManager();
         this.batch = game.getBatch();
+        this.game = game;
 
     }
 
@@ -70,6 +75,8 @@ public class GameScreen implements Screen {
         }
 
         engine = new PooledEngine();
+
+        engine.addSystem(new RenderSystem(game,camera,viewport));
 
     }
 
