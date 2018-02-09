@@ -35,6 +35,7 @@ public class RenderSystem extends EntitySystem {
     @Override
     public void update(float deltaTime) {
 
+
         batch.draw(fon, 0, 0, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
 
 

@@ -11,16 +11,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.chertenok.game.acceltest.AccelTest;
 import ru.chertenok.game.acceltest.Shar;
+import ru.chertenok.game.acceltest.common.EntityFactory;
 import ru.chertenok.game.acceltest.config.GameConfig;
+import ru.chertenok.game.acceltest.system.DebugRenderSystem;
 import ru.chertenok.game.acceltest.system.RenderSystem;
 
 import java.util.Random;
 
 public class GameScreen implements Screen {
+
+    private static final Logger log = new Logger(GameScreen.class.getName(), Logger.DEBUG);
 
     public static final Random random = new Random();
     public Sound sound;
@@ -43,10 +48,8 @@ public class GameScreen implements Screen {
     float accl_y = 0;
     float accl_x = 0;
 
-
-
-
     private PooledEngine engine;
+    private EntityFactory factory;
 
 
     public GameScreen(AccelTest game) {
@@ -75,8 +78,12 @@ public class GameScreen implements Screen {
         }
 
         engine = new PooledEngine();
+        factory = new EntityFactory(engine);
 
         engine.addSystem(new RenderSystem(game,camera,viewport));
+        engine.addSystem(new DebugRenderSystem(assetManager, viewport, batch));
+
+        factory.addPlayer(100, 100);
 
     }
 
@@ -88,21 +95,22 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        viewport.apply();
-        batch.setProjectionMatrix(viewport.getCamera().combined);
+        //  viewport.apply();
+//        batch.setProjectionMatrix(viewport.getCamera().combined);
         //viewport.apply();
 
         batch.begin();
         engine.update(delta);
-        batch.draw(lose, 300, 300);
+        log.debug("entities size = " + engine.getEntities().size());
+//        batch.draw(lose, 300, 300);
 
 
-        for (int i = 0; i < sharCount; i++) {
-            shar[i].draw(batch);
-            Gdx.app.log("x=", "" + shar[i].getPosition().x);
-            Gdx.app.log("y=", "" + shar[i].getPosition().y);
+//        for (int i = 0; i < sharCount; i++) {
+//            shar[i].draw(batch);
+//            Gdx.app.log("x=", "" + shar[i].getPosition().x);
+//            Gdx.app.log("y=", "" + shar[i].getPosition().y);
 
-        }
+        //      }
 
 
 		/*	font.draw(batch, "x=" + Gdx.input.getAccelerometerX(), 100, 100);
